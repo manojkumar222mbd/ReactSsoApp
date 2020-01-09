@@ -1,0 +1,627 @@
+swagger: '2.0'
+info:
+  title: 'SSO API'
+  version: '1.0'
+basePath: /
+schemes:
+  - http
+paths:
+  /oauth/token:
+    post:
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - description: Grant Type
+          in: formData
+          name: grant_type
+          type: string
+          enum: [password]
+          required: true
+        - description: Client Id
+          in: formData
+          name: client_id
+          type: string
+          enum: [baf50a1c-1a7d-11ea-978f-2e728ce88125]
+          required: true
+        - description: Email
+          in: formData
+          name: username
+          required: true
+          type: string
+        - description: Password
+          in: formData
+          name: password
+          required: true
+          type: string
+      responses:
+        '200':
+          description: |
+            <pre>
+              {
+                "error": null,
+                "status": 1,
+                "response": {
+                  "accessToken": "String",
+                  "accessTokenExpiresAt": "String",
+                  "refreshToken": "String",
+                  "refreshTokenExpiresAt": "String",
+                  "scope": "String",
+                  "client": {
+                    "id": "Integer"
+                  },
+                  "user": {
+                    "id": "Integer"
+                  }
+                }
+              }              
+            </pre>
+        '500':
+          description: |
+            <pre>
+              {
+                "error": "Invalid User",
+                "status": 0,
+                "response": null
+              }
+            </pre>
+      tags:
+        - Auth
+      description:
+      operationId: 
+      summary: authenticate an user
+  /oauth/me:
+    get:
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - description: Bearer Token
+          in: header
+          name: Authorization
+          type: string
+          required: true
+      responses:
+        '200':
+          description: |
+            <pre>
+              {
+                "error": null,
+                "status": 1,
+                "response": {
+                  "accessToken": "String",
+                  "accessTokenExpiresAt": "String",
+                  "scope": "String",
+                  "client": {
+                    "id": 1,
+                    "redirect_uris": null,
+                    "grants": [
+                      "password"
+                    ],
+                    "user_id": null
+                  },
+                  "user": {
+                    "id": "Integer",
+                    "tenant_id": "Integer",
+                    "username": "String",
+                    "name": "String",
+                    "phone": "String",
+                    "scope": "String"
+                  }
+                }
+              }              
+            </pre>
+        '401':
+          description: |
+            <pre>
+              {
+                "error": "Unauthorized",
+                "status": 0,
+                "response": null
+              }
+            </pre>
+      tags:
+        - Auth
+      description:
+      operationId: 
+      summary: get authenticated user
+  /admin/users:
+    post:
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - description: Bearer Token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+        - description: UserName
+          in: formData
+          name: name
+          required: true
+          type: string
+        - description: User Password
+          in: formData
+          name: password
+          required: true
+          type: string
+        - description: User Address
+          in: formData
+          name: address
+          required: true
+          type: string
+        - description: User Email
+          in: formData
+          name: email
+          required: true
+          type: string
+        - description: User Phone
+          in: formData
+          name: phone
+          required: true
+          type: string
+        - description: User Status
+          in: formData
+          name: status
+          required: true
+          type: integer
+        - description: Tenant Id in case of login with super admin
+          in: formData
+          name: tenant_id
+          type: integer  
+      responses:
+        '200':
+          description: |
+            <pre>
+              {
+                  "error": null,
+                  "status": 1,
+                  "response": "successfully added"
+              }              
+            </pre>
+        '400':
+          description: |
+            <pre>
+              
+            </pre>
+        '401':
+          description: |
+            <pre>
+              {
+                  "error": "Unauthorized",
+                  "status": 0,
+                  "response": null
+              }             
+            </pre>          
+        '500':
+          description: Internal server error.
+      tags:
+        - User
+      description: <p>Add User</p>
+      operationId: add new user
+      summary: Add User
+  /admin/users:  
+    get:
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - description: Bearer Token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+        - description: offsets
+          in: path
+          name: offset
+          type: integer
+        - description: limits
+          in: path
+          name: limit
+          type: integer 
+        - description: Search Key Word
+          in: formData
+          name: search
+          type: string        
+       
+      responses:
+        '200':
+          description: |
+            <pre>
+              {
+                "status": 1,
+                "message": "string"
+              }
+            </pre>
+        '400':
+          description: |
+            <pre>
+              {
+                "status": 0,
+                "message": "string"
+              }
+            </pre>
+        '401':
+          description: Token invalid or expired.
+        '500':
+          description: Internal server error.
+      tags:
+        - User
+      description: <p>Get All Users</p>
+      operationId: Get All Users
+      summary: Get All Users
+  /admin/users/{userid}:
+    delete:
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - description: Bearer Token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+        - description: User Id
+          in: path
+          name: userid
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: |
+            <pre>
+              {
+                "status": 1,
+                "message": "string"
+              }
+            </pre>
+        '400':
+          description: |
+            <pre>
+              {
+                "status": 0,
+                "message": "string"
+              }
+            </pre>
+        '401':
+          description: Token invalid or expired.
+        '500':
+          description: Internal server error.
+      tags:
+        - User
+      description: <p>Delete User</p>
+      operationId: delete users
+      summary: Delete Users
+    put:
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - description: Bearer Token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+        - description: User Id
+          in: path
+          name: userid
+          required: true
+          type: integer
+        - description: Name
+          in: formData
+          name: name
+          required: true
+          type: string
+        - description: User Password
+          in: formData
+          name: password
+          required: true
+          type: string
+        - description: User Address
+          in: formData
+          name: address
+          required: true
+          type: string
+        - description: User Email
+          in: formData
+          name: email
+          required: true
+          type: string
+        - description: User Phone
+          in: formData
+          name: phone
+          required: true
+          type: string
+        - description: User Status
+          in: formData
+          name: status
+          required: true
+          type: integer
+        - description: Tenant Id in case of login with super admin
+          in: formData
+          name: tenant_id
+          type: integer   
+       
+         
+      responses:
+        '200':
+          description: |
+            <pre>
+              {
+                "status": 1,
+                "message": "string"
+              }
+            </pre>
+        '400':
+          description: |
+            <pre>
+              {
+                "status": 0,
+                "message": "string"
+              }
+            </pre>
+        '401':
+          description: Token invalid or expired.
+        '500':
+          description: Internal server error.
+      tags:
+        - User
+      description: <p>Update User</p>
+      operationId: Update users
+      summary: Update Users
+
+    get:
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - description: Bearer Token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+        - description: User Id
+          in: path
+          name: userid
+          type: integer
+         
+       
+      responses:
+        '200':
+          description: |
+            <pre>
+              {
+                "status": 1,
+                "message": "string"
+              }
+            </pre>
+        '400':
+          description: |
+            <pre>
+              {
+                "status": 0,
+                "message": "string"
+              }
+            </pre>
+        '401':
+          description: Token invalid or expired.
+        '500':
+          description: Internal server error.
+      tags:
+        - User
+      description: <p>Get User</p>
+      operationId: Get User
+      summary: Get User
+  /admin/groups:
+    post:
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - description: Bearer Token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+        - description: GroupName
+          in: formData
+          name: name
+          required: true
+          type: string
+      responses:
+        '200':
+          description: |
+            <pre>
+              {
+                  "error": null,
+                  "status": 1,
+                  "response": "successfully added"
+              }              
+            </pre>
+        '400':
+          description: |
+            <pre>
+              
+            </pre>
+        '401':
+          description: |
+            <pre>
+              {
+                  "error": "Unauthorized",
+                  "status": 0,
+                  "response": null
+              }             
+            </pre>          
+        '500':
+          description: Internal server error.
+      tags:
+        - Group
+      description: <p>Add Group</p>
+      operationId: add new Group
+      summary: Add Group 
+  /admin/groups:  
+    get:
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - description: Bearer Token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+        - description: offsets
+          in: path
+          name: offset
+          type: integer
+        - description: limits
+          in: path
+          name: limit
+          type: integer
+      responses:
+        '200':
+          description: |
+            <pre>
+              {
+                "status": 1,
+                "message": "string"
+              }
+            </pre>
+        '400':
+          description: |
+            <pre>
+              {
+                "status": 0,
+                "message": "string"
+              }
+            </pre>
+        '401':
+          description: Token invalid or expired.
+        '500':
+          description: Internal server error.
+      tags:
+        - Group
+      description: <p>Get All Group</p>
+      operationId: Get All Group
+      summary: Get All Group      
+  /admin/groups/{groupid}:
+    delete:
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - description: Bearer Token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+        - description: Group Id
+          in: path
+          name: groupid
+          required: true
+          type: integer
+      responses:
+        '200':
+          description: |
+            <pre>
+              {
+                "status": 1,
+                "message": "string"
+              }
+            </pre>
+        '400':
+          description: |
+            <pre>
+              {
+                "status": 0,
+                "message": "string"
+              }
+            </pre>
+        '401':
+          description: Token invalid or expired.
+        '500':
+          description: Internal server error.
+      tags:
+        - Group
+      description: <p>Delete Group</p>
+      operationId: delete groups
+      summary: Delete Groups
+    put:
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - description: Bearer Token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+        - description: Group Id
+          in: path
+          name: groupid
+          required: true
+          type: integer
+        - description: Name
+          in: formData
+          name: name
+          required: true
+          type: string
+      responses:
+        '200':
+          description: |
+            <pre>
+              {
+                "status": 1,
+                "message": "string"
+              }
+            </pre>
+        '400':
+          description: |
+            <pre>
+              {
+                "status": 0,
+                "message": "string"
+              }
+            </pre>
+        '401':
+          description: Token invalid or expired.
+        '500':
+          description: Internal server error.
+      tags:
+        - Group
+      description: <p>Update Group</p>
+      operationId: Update Group
+      summary: Update Group
+    get:
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - description: Bearer Token
+          in: header
+          name: Authorization
+          required: true
+          type: string
+        - description: Group Id
+          in: path
+          name: groupid
+          type: integer
+      responses:
+        '200':
+          description: |
+            <pre>
+              {
+                "status": 1,
+                "message": "string"
+              }
+            </pre>
+        '400':
+          description: |
+            <pre>
+              {
+                "status": 0,
+                "message": "string"
+              }
+            </pre>
+        '401':
+          description: Token invalid or expired.
+        '500':
+          description: Internal server error.
+      tags:
+        - Group
+      description: <p>Get Group</p>
+      operationId: Get Group
+      summary: Get Group
+tags:
+- name: Auth
+- name: User
+- name: Group
