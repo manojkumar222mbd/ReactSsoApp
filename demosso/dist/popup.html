@@ -1,0 +1,80 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" id="old-css" media="" href="popup.css">
+    <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body tabindex="1">
+    <div id="content">
+        <div>
+            <div class="user-is-admin">
+                <div class="header clearfix" role="banner">
+                    <div class="actions">
+                        <div class="header-icon-container">
+                            <div class="header-icon profile"> <img
+                                    src="images/icon-user-profile.png"
+                                    alt="Profile"> </div>
+                            <div class="header-selected header-selected-profile"></div>
+                        </div>
+                        <!-- <div class="admin-only"> <a href="#" class="okta-admin">User</a> </div> -->
+                        <div class="okta-home-container"> <a class="okta-home" href="#">Version - 1.0</a> </div>
+                    </div>
+                    <h1 class="title"><img class="header-logo" src="smg.png" style="border-radius: 20%;" alt="">Single
+                        sign on</h1>
+                </div>
+            </div>
+            <div class="data-list data-list-sidebar-left clearfix">
+                <div data-se="data-list-toolbar" class="data-list-toolbar clearfix">
+                    <div class="search-box-wrap float-l">
+                        <span class="search-box input-fix"> <span class="icon-only icon-16 magnifying-glass-16"></span>
+                            <input class="text-field-default search" type="text" placeholder="Search for an app"
+                                title="Search for an app" aria-label="Search for an app" autocomplete="off"
+                                spellcheck="false" autocorrect="off">
+
+                        </span>
+                    </div>
+                    <div class="overlay"></div>
+                </div>
+                <div class="data-list-content-wrap" data-se="data-list-content-wrap">
+                    <div class="data-list-content" data-se="data-list-content">
+                        <table class="data-list-table">
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="user-settings-page">
+                <div class="user-settings-close"> <i class="fa fa-close fa-2x"></i></div>
+                <div class="user-settings-main">
+                    <div class="user-setting-group">
+                        <div class="setting-group-title">User Credentials:</div>
+                        <div class="user-setting">
+                            <div class="user-setting-text-container">
+                                <div class="user-setting-title"> Username </div>
+                                <div class="user-setting-description">
+                                    <input type="hidden" id="sso_id" >
+                                    <input type="text" id="sso_user" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="user-setting">
+                            <div class="user-setting-text-container">
+                                <div class="user-setting-title"> Password </div>
+                                <div class="user-setting-description">
+                                    <input type="password" id="sso_pass" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="user-setting-button">Submit</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="jquery-2.1.4.min.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>
